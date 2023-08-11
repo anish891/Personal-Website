@@ -1,3 +1,4 @@
+from PIL import Image
 import requests
 import streamlit as st
 from streamlit_lottie import st_lottie
@@ -12,7 +13,16 @@ def load_lottieurl(url):
         return None
     return r.json()
 
+# Using CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+local_css("style/style.css")
+
 lottie_coding = "https://lottie.host/7021a9e3-9c3d-469d-ad61-f66dcd5f0d45/3aGbryrUyc.json"
+image_coding = Image.open("images/photo.jpeg")
 
 
 with st.container():
@@ -53,9 +63,10 @@ with st.container():
     st.write("##")
     image_column, text_column = st.columns((1,2))
     with image_column:
-        #######
-        with text_column:
-            st.subheader("Notes Application")
+        st.image(image_coding)
+        
+    with text_column:
+        st.subheader("Notes Application")
         st.write(
             """
             This is a Flutter application that allows users to store and manage their notes. The app utilizes Firebase as the backend for storing and retrieving the notes.
@@ -71,3 +82,30 @@ with st.container():
             Offline Support: Users can access and modify their notes even when they are offline. Changes will be synchronized with the backend once the device is online.
         """
         )
+
+
+
+
+
+#COntact Form
+with st.container():
+    st.write("---")
+    st.header("Get In Touch With Me!")
+    st.write("##")
+    
+    contact_form = """
+    <form action="https://formsubmit.co/anishtejwani891@email.com" method="POST">
+     <input type="hidden" name ="_captcha" value="false">
+     <input type="text" name="name" placeholder="Your Name" required>
+     <input type="email" name="email" placeholder="Your email" required>
+     <textarea name ="message" placeholder="Your message here" required></textarea>
+     <button type="submit">Send</button>
+    </form>
+
+    """
+
+    left_column, right_column = st.columns(2)
+    with left_column:
+        st.markdown(contact_form, unsafe_allow_html=True)
+    with right_column:
+        st.empty()
